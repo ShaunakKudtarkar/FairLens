@@ -89,7 +89,7 @@ Located in `backend/data/sample.csv`
 
 ## 👨‍💻 Author
 
-Shaunak Kudtarkar
+VKJS
 
 ---
 
