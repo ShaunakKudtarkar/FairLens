@@ -8,34 +8,15 @@ uvicorn main:app --reload
 Docs:
 http://127.0.0.1:8000/docs
 """
-
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-
 app = FastAPI(title="FairLens API")
-
-# In-memory storage (demo)
-
 dataset = None
 model = None
-
-# =============================
-
-# 0. Health Check
-
-# =============================
-
 @app.get("/")
 def health():
 return {"status": "running", "service": "FairLens FastAPI"}
-
-# =============================
-
-# 1. Upload Dataset
-
-# =============================
-
 @app.post("/upload")
 async def upload(file: UploadFile = File(...)):
 global dataset
@@ -51,13 +32,6 @@ try:
 except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))
 ```
-
-# =============================
-
-# 2. Data Audit
-
-# =============================
-
 @app.post("/audit")
 def audit():
 global dataset
@@ -72,13 +46,6 @@ return {
     "columns": list(dataset.columns)
 }
 ```
-
-# =============================
-
-# 3. Bias Detection
-
-# =============================
-
 @app.post("/bias")
 def bias():
 global dataset
@@ -102,26 +69,12 @@ return {
     "bias_difference": abs(float(male_rate - female_rate))
 }
 ```
-
-# =============================
-
-# 4. Mitigation (Demo)
-
-# =============================
-
 @app.post("/mitigate")
 def mitigate():
 return {
 "message": "Bias mitigation applied (demo)",
 "method": "reweighing (simulated)"
 }
-
-# =============================
-
-# 5. Train Model
-
-# =============================
-
 @app.post("/train")
 def train():
 global dataset, model
@@ -148,13 +101,6 @@ try:
 except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))
 ```
-
-# =============================
-
-# 6. Predict
-
-# =============================
-
 @app.post("/predict")
 def predict(data: dict):
 global model
@@ -175,13 +121,6 @@ try:
 except Exception as e:
     raise HTTPException(status_code=500, detail=str(e))
 ```
-
-# =============================
-
-# 7. Explainability (Demo)
-
-# =============================
-
 @app.post("/explain")
 def explain():
 global model
